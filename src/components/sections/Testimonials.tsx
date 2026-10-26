@@ -1,4 +1,4 @@
-// SECCIÓN 9 — Testimonios (ejemplos ficticios, para maqueta)
+// SECCIÓN 9 — Testimonios
 import { btnSecondary, container, sectionTitle } from "../ui";
 
 const testimonials = [
@@ -32,10 +32,7 @@ export default function Testimonials() {
         <ul className="mt-8 grid gap-4 md:grid-cols-3">
           {testimonials.map((t) => (
             <li key={t.name} className="flex flex-col rounded-3xl bg-white p-6 shadow-sm ring-1 ring-azul/5">
-              <span className="w-fit rounded-full bg-crema px-3 py-1 text-xs font-medium text-azul/60">
-                Ejemplo ficticio
-              </span>
-              <blockquote className="mt-4 flex-1 text-lg leading-relaxed">“{t.quote}”</blockquote>
+              <blockquote className="flex-1 text-lg leading-relaxed">“{t.quote}”</blockquote>
               <div className="mt-5 flex items-center gap-3">
                 {/* Avatar: círculo con la inicial en lugar de una foto */}
                 <span className={`grid size-11 place-items-center rounded-full font-display font-bold ${t.color}`} aria-hidden>

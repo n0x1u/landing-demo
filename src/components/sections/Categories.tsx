@@ -21,7 +21,7 @@ const categories = [
     emoji: "🃏",
     title: "Juegos para grandes",
     text: "Porque crecer no significa dejar de jugar.",
-    cta: "Ver juegos para adultos",
+    cta: "Ver juegos para grandes",
     tile: "bg-azul",
   },
   {

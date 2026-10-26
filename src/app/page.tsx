@@ -1,4 +1,7 @@
 // Página principal: junta las 12 secciones en orden.
+import { CartProvider } from "@/components/cart/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
+import DemoStrip from "@/components/sections/DemoStrip";
 import AnnouncementBar from "@/components/sections/AnnouncementBar";
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
@@ -14,7 +17,9 @@ import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
-    <>
+    // CartProvider envuelve todo para que cualquier sección pueda usar el carrito
+    <CartProvider>
+      <DemoStrip />
       <AnnouncementBar />
       <Header />
       <main>
@@ -29,6 +34,7 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
-    </>
+      <CartDrawer />
+    </CartProvider>
   );
 }

@@ -78,23 +78,3 @@ export function ChatIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
-
-export function InstagramIcon({ className = "size-5" }: IconProps) {
-  return (
-    <svg {...svgProps} className={className}>
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
-    </svg>
-  );
-}
-
-export function MusicIcon({ className = "size-5" }: IconProps) {
-  return (
-    <svg {...svgProps} className={className}>
-      <path d="M9 18V5l10-2v13" />
-      <circle cx="6.5" cy="18" r="2.5" />
-      <circle cx="16.5" cy="16" r="2.5" />
-    </svg>
-  );
-}

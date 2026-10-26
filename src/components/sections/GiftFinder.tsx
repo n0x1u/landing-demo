@@ -1,14 +1,28 @@
 // SECCIÓN 8 — Buscador de regalos
-// "use client" porque hay que recordar qué edad eligió la persona.
+// "use client" porque hay que recordar qué edad eligió la persona y mostrar los resultados.
 "use client";
 
 import { useState } from "react";
+import { ageOptions, products, type AgeId } from "@/data/products";
+import ProductCard from "../ProductCard";
 import { btnPrimary, container } from "../ui";
 
-const ages = ["De 0 a 3 años", "De 4 a 7 años", "De 8 a 12 años", "Adolescentes", "Adultos"];
-
 export default function GiftFinder() {
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<AgeId | null>(null);
+  const [searched, setSearched] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+
+  // Filtramos la lista: solo quedan los productos recomendados para la edad elegida
+  const results = selected ? products.filter((p) => p.ages.includes(selected)) : [];
+  const selectedPhrase = ageOptions.find((a) => a.id === selected)?.phrase;
+
+  function handleSearch() {
+    if (!selected) {
+      setShowHint(true);
+      return;
+    }
+    setSearched(true);
+  }
 
   return (
     <section id="regalos" className="py-6 lg:py-10">
@@ -25,33 +39,60 @@ export default function GiftFinder() {
             <fieldset className="mt-8">
               <legend className="mx-auto font-semibold">¿Para quién estás buscando?</legend>
               <div className="mx-auto mt-4 flex max-w-2xl flex-wrap justify-center gap-2 sm:gap-3">
-                {ages.map((age) => {
-                  const isActive = selected === age;
+                {ageOptions.map((age) => {
+                  const isActive = selected === age.id;
                   return (
                     <button
-                      key={age}
+                      key={age.id}
                       type="button"
                       aria-pressed={isActive}
-                      onClick={() => setSelected(isActive ? null : age)}
+                      onClick={() => {
+                        setSelected(isActive ? null : age.id);
+                        setShowHint(false);
+                        if (isActive) setSearched(false);
+                      }}
                       className={`min-h-12 rounded-full border-2 px-5 font-semibold transition ${
                         isActive
                           ? "border-amarillo bg-amarillo text-azul"
                           : "border-white/30 text-white hover:border-white"
                       }`}
                     >
-                      {age}
+                      {age.label}
                     </button>
                   );
                 })}
               </div>
             </fieldset>
 
-            <button type="button" className={`${btnPrimary} mt-8 w-full sm:w-auto`}>
+            <button type="button" onClick={handleSearch} className={`${btnPrimary} mt-8 w-full sm:w-auto`}>
               Encontrar el regalo ideal
             </button>
+            {showHint && <p className="mt-3 font-semibold text-amarillo">Primero elegí una edad 👆</p>}
             <p className="mt-4 text-sm text-white/70">
               Filtramos los juegos para que elegir sea mucho más fácil.
             </p>
+
+            {/* Resultados. aria-live hace que los lectores de pantalla anuncien el cambio. */}
+            <div aria-live="polite">
+              {searched && selected && (
+                <div className="mt-10 border-t border-white/15 pt-8 text-left">
+                  <p className="text-center font-semibold">
+                    {results.length > 0
+                      ? `${results.length} ${results.length === 1 ? "juego ideal" : "juegos ideales"} para ${selectedPhrase}`
+                      : `Por ahora no tenemos juegos para ${selectedPhrase}. ¡Pronto vamos a sumar más!`}
+                  </p>
+                  {results.length > 0 && (
+                    <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {results.map((product) => (
+                        <li key={product.id} className="flex">
+                          <ProductCard product={product} className="w-full" />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

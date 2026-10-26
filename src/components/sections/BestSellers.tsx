@@ -1,12 +1,7 @@
 // SECCIÓN 7 — Más elegidos
-import { CardsArt, CraftArt, TowerArt } from "../illustrations";
-import { btnDark, btnSecondary, container, sectionTitle } from "../ui";
-
-const products = [
-  { name: "Torre de Equilibrio", text: "Poné a prueba tu pulso.", Art: TowerArt, bg: "bg-amarillo/30" },
-  { name: "Kit Creativo de Manualidades", text: "Creá, imaginá y divertite.", Art: CraftArt, bg: "bg-naranja/15" },
-  { name: "Juego de Cartas Rápido", text: "Diversión asegurada en cada ronda.", Art: CardsArt, bg: "bg-azul/10" },
-];
+import { products } from "@/data/products";
+import ProductCard from "../ProductCard";
+import { btnSecondary, container, sectionTitle } from "../ui";
 
 export default function BestSellers() {
   return (
@@ -19,22 +14,10 @@ export default function BestSellers() {
       </div>
 
       {/* En celular: carrusel que se desliza con el dedo. En pantallas grandes: grilla de 3. */}
-      <ul className={`${container} no-scrollbar mt-8 flex snap-x snap-mandatory scroll-px-4 gap-4 sm:scroll-px-6 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible`}>
-        {products.map(({ name, text, Art, bg }) => (
-          <li
-            key={name}
-            className="flex w-[78%] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-azul/5 md:w-auto"
-          >
-            <div className={`grid aspect-square place-items-center ${bg}`}>
-              <Art className="h-3/4 w-auto" />
-            </div>
-            <div className="flex flex-1 flex-col p-5">
-              <h3 className="font-display text-lg font-bold">{name}</h3>
-              <p className="mt-1 flex-1 text-azul/70">{text}</p>
-              <button type="button" className={`${btnDark} mt-4 w-full`}>
-                Lo quiero
-              </button>
-            </div>
+      <ul className={`${container} no-scrollbar mt-8 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto pb-2 sm:scroll-px-6 md:grid md:grid-cols-3 md:overflow-visible`}>
+        {products.map((product) => (
+          <li key={product.id} className="flex w-[78%] shrink-0 snap-start md:w-auto">
+            <ProductCard product={product} className="w-full" />
           </li>
         ))}
       </ul>

@@ -1,6 +1,8 @@
 // SECCIÓN 6 — Producto estrella
+import Image from "next/image";
+import { formatPrice, getProduct } from "@/data/products";
+import AddToCartButton from "../cart/AddToCartButton";
 import { CheckIcon } from "../icons";
-import { MediaPlaceholder, TowerArt } from "../illustrations";
 import { btnPrimary, btnSecondary, container, sectionTitle } from "../ui";
 
 const highlights = [
@@ -9,19 +11,20 @@ const highlights = [
   "Partidas rápidas y llenas de suspenso.",
 ];
 
+const product = getProduct("torre")!;
+
 export default function FeaturedProduct() {
   return (
     <section id="destacado" className="bg-white py-14 lg:py-20">
       <div className={`${container} grid gap-8 lg:grid-cols-2 lg:gap-14`}>
-        {/* Galería: ilustración principal + espacios marcados para video y foto */}
-        <div>
-          <div className="grid aspect-square place-items-center rounded-[2rem] bg-amarillo/30">
-            <TowerArt className="h-4/5 w-auto" />
-          </div>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            <MediaPlaceholder label="▶ Video: alguien sacando un bloque" className="aspect-video" />
-            <MediaPlaceholder label="Foto del producto" className="aspect-video" />
-          </div>
+        <div className="relative aspect-square overflow-hidden rounded-[2rem] bg-white ring-1 ring-azul/10">
+          <Image
+            src={product.image}
+            alt={product.imageAlt}
+            fill
+            sizes="(min-width: 1152px) 548px, (min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
         </div>
 
         <div className="flex flex-col justify-center">
@@ -50,16 +53,12 @@ export default function FeaturedProduct() {
             ))}
           </ul>
 
-          {/* Precio: espacio marcado hasta tener el precio vigente real */}
-          <div className="mt-6 flex items-baseline gap-3 rounded-2xl border-2 border-dashed border-azul/20 px-4 py-3">
-            <span className="text-sm text-azul/60">Precio vigente</span>
-            <span className="text-2xl font-bold tracking-tight">$ —</span>
-          </div>
+          <p className="mt-6 text-3xl font-bold tracking-tight">{formatPrice(product.price)}</p>
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <button type="button" className={btnPrimary}>
+            <AddToCartButton productId={product.id} className={btnPrimary}>
               Agregar al carrito
-            </button>
+            </AddToCartButton>
             <button type="button" className={btnSecondary}>
               Ver detalles
             </button>

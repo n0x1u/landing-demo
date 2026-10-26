@@ -3,6 +3,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCart } from "../cart/CartContext";
 import { CartIcon, CloseIcon, MenuIcon, SearchIcon } from "../icons";
 import { container } from "../ui";
 
@@ -10,7 +11,7 @@ const menu = [
   { label: "Todos los productos", href: "#mas-elegidos" },
   { label: "Juguetes para chicos", href: "#categorias" },
   { label: "Juegos de mesa", href: "#categorias" },
-  { label: "Juegos para adultos", href: "#categorias" },
+  { label: "Juegos para grandes", href: "#categorias" },
   { label: "Ideas para regalar", href: "#regalos" },
   { label: "Ofertas", href: "#destacado" },
   { label: "Contacto", href: "#contacto" },
@@ -30,6 +31,7 @@ const iconButton =
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { count, openCart } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-azul/10 bg-crema/90 backdrop-blur-md">
@@ -55,11 +57,19 @@ export default function Header() {
           <button type="button" aria-label="Buscar" className={iconButton}>
             <SearchIcon />
           </button>
-          <button type="button" aria-label="Carrito, 0 productos" className={iconButton}>
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label={`Abrir carrito, ${count} ${count === 1 ? "producto" : "productos"}`}
+            className={iconButton}
+          >
             <CartIcon />
-            <span className="absolute top-1 right-1 grid size-4.5 place-items-center rounded-full bg-naranja text-[10px] font-bold text-white">
-              0
-            </span>
+            {/* El contador solo aparece cuando hay algo en el carrito */}
+            {count > 0 && (
+              <span className="absolute top-0.5 right-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-naranja px-1 text-[11px] font-bold text-white">
+                {count}
+              </span>
+            )}
           </button>
           <button
             type="button"

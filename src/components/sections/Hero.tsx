@@ -1,6 +1,6 @@
 // SECCIÓN 3 — Hero principal
+import Image from "next/image";
 import { ArrowIcon } from "../icons";
-import { HeroScene } from "../illustrations";
 import { btnPrimary, btnSecondary, container } from "../ui";
 
 export default function Hero() {
@@ -24,11 +24,21 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-[2rem] bg-naranja">
-        <HeroScene className="block h-auto w-full" />
-        <span className="absolute top-3 left-3 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-azul">
-          Ilustración · espacio para foto real
-        </span>
+      <div className="relative">
+        {/* Forma decorativa detrás de la foto */}
+        <span className="absolute -top-3 -right-3 size-24 rounded-3xl bg-amarillo sm:size-32" aria-hidden />
+        <div className="relative aspect-[3/2] overflow-hidden rounded-[2rem] bg-naranja shadow-xl shadow-azul/10">
+          {/* Es la imagen más importante de la página: la cargamos primero */}
+          <Image
+            src="/imagenes/familia-jugando.png"
+            alt="Una familia se ríe mientras el papá saca un bloque de la torre de equilibrio"
+            fill
+            sizes="(min-width: 1152px) 552px, (min-width: 1024px) 50vw, 100vw"
+            loading="eager"
+            fetchPriority="high"
+            className="object-cover"
+          />
+        </div>
       </div>
     </section>
   );
