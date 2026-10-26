@@ -10,5 +10,12 @@ export const btnDark = `${base} bg-azul text-white hover:bg-azul/90`;
 
 export const container = "mx-auto w-full max-w-6xl px-4 sm:px-6";
 
+// Estilo común de los íconos de Lucide: mismo grosor de línea y naranja de la marca
+export const brandIcon = {
+  strokeWidth: 1.75,
+  color: "var(--color-naranja-oscuro)",
+  "aria-hidden": true,
+} as const;
+
 export const sectionTitle =
   "font-display text-3xl font-extrabold leading-tight tracking-tight text-azul sm:text-4xl";
